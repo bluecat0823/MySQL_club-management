@@ -73,5 +73,20 @@ def delete_student(student_id):
     conn.close()
     return jsonify({"message": "Student deleted successfully"}), 200
 
+@app.route('/students', methods=['GET'])
+def get_all_students():
+    """
+    Fetch all students from the database and return them in JSON format.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = "SELECT * FROM students"
+    cursor.execute(query)
+    students = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(students), 200
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
