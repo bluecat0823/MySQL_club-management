@@ -15,6 +15,19 @@ db_config = {
 def get_db_connection():
     return mysql.connector.connect(**db_config)
 
+@app.route('/')
+def home():
+    return """
+    <h1>Welcome to Club Management System</h1>
+    <p>Use the following endpoints to manage students:</p>
+    <ul>
+        <li>POST /students - Add a student</li>
+        <li>PUT /students/&lt;id&gt; - Update a student</li>
+        <li>DELETE /students/&lt;id&gt; - Delete a student</li>
+    </ul>
+    """
+
+
 # 회원 추가 (Create)
 @app.route('/students', methods=['POST'])
 def add_student():
