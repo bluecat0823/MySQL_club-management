@@ -87,6 +87,37 @@ def get_all_students():
     conn.close()
     return jsonify(students), 200
 
+# 졸업한 학생 목록 조회
+@app.route('/students/graduated', methods=['GET'])
+def get_graduated_students():
+    """
+    Fetch all graduated students from the database and return them in JSON format.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = "SELECT * FROM students WHERE is_graduated = TRUE"
+    cursor.execute(query)
+    students = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(students), 200
+
+
+# 졸업하지 않은 학생 목록 조회
+@app.route('/students/not-graduated', methods=['GET'])
+def get_not_graduated_students():
+    """
+    Fetch all non-graduated students from the database and return them in JSON format.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = "SELECT * FROM students WHERE is_graduated = FALSE"
+    cursor.execute(query)
+    students = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(students), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
